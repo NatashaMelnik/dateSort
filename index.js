@@ -1,67 +1,54 @@
-// console.log(123)
+const SortDays = require('./SortDays');
+const GetAllExistMonthes = require('./GetAllExistMonthes');
+const DelSame = require('./DelSame');
+const DispalyEmployees = require('./DispalyEmployees');
 
-// Декабрь 2020
-// (20) - Ваня Иванов (23 года)
-// (23) - Петя Петров (25 лет)
-// Январь 2021
-// (01) - Коля Новогодний (21 год)
-// (07) - Стас Рождественский (30 лет)
-
-let birthday1 = new Date(1994, 11, 4);
-let birthday2 = new Date(1995, 5, 23);
-let birthday3 = new Date(1993, 5, 14);
-let birthday4 = new Date(1995, 10, 14);
-
-let monthNamesArr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Ноябрь', 'Декабрь',];
+let birthday1 = new Date('June 17, 1995');
+let birthday2 = new Date('June 12, 1993');
+let birthday3 = new Date('July 16, 1992');
+let birthday4 = new Date('December 19, 1995');
 
 function main() {
+
+    let inputData = [
+        { name: 'Ваня Иванов', birthday: birthday1 },
+        { name: 'Петя Петров', birthday: birthday2 },
+        { name: 'Коля Новогодний', birthday: birthday3 },
+        { name: 'Стас Рождественский', birthday: birthday4 }
+    ];
+
+    inputData = SortDays(inputData);
+
+    let mapKeys = GetAllExistMonthes(inputData);
+
     let employees = new Map();
-    employees.set('Ваня Иванов', birthday1);
-    employees.set('Петя Петров', birthday2);
-    employees.set('Коля Новогодний', birthday3);
-    employees.set('Стас Рождественский', birthday4);
 
-    Display(employees);
+    for (let i = 0; i < inputData.length; i++) {
+        for (let j = 0; j < mapKeys.length; j++) {
 
-}
+            const birthday = inputData[i].birthday.getMonth();
+            const obj = inputData[i];
 
-function Display(map) {
-    // let monthArr = GetAllExistMonthes(map);
-
-    for (let j = 0; j < 13; j++) {
-        let currMonth;
-        for (const [key, value] of map) {
-            if (value.getMonth() == j) {
-                let tempMonth = monthNamesArr[value.getMonth() - 1];
-                if (tempMonth !== currMonth) {
-                    console.log(tempMonth);
+            if (birthday == mapKeys[j]) {
+                if (!employees.get(birthday)) {
+                    employees.set(birthday, [obj]);
+                } else {
+                    let currArr = employees.get(birthday);
+                    currArr.push(obj);
+                    currArr = DelSame(currArr);
+                    employees.delete(birthday);
+                    employees.set(birthday, currArr);
                 }
-                console.log(`(${value.getDay()}) - ${key} (${calculateAge(map.get(key))})`);
-                currMonth = tempMonth;
             }
         }
     }
+
+    // console.log(employees); // Delete
+    DispalyEmployees(employees);
 }
 
-// function GetAllExistMonthes(map) {
-//     const iterator = map.values();
-//     let monthArr = [];
-
-//     for (let i = 0; i < map.size; i++) {
-//         monthArr.push(iterator.next().value.getMonth())
-//     }
-
-//     monthArr.sort(function (a, b) {
-//         return a - b;
-//     });
-
-//     return monthArr;
-// }
-
-function calculateAge(date) {
-    var ageDifMs = Date.now() - date;
-    var ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
 
 main();
+
+// module.exports = calculateAge
+// module.exports = GetAllExistMonthes
