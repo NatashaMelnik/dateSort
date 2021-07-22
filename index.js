@@ -1,4 +1,3 @@
-const SortDays = require('./SortDays');
 const GetAllExistMonthes = require('./GetAllExistMonthes');
 const DelSame = require('./DelSame');
 const DispalyEmployees = require('./DispalyEmployees');
@@ -16,8 +15,6 @@ function main() {
         { name: 'Коля Новогодний', birthday: birthday3 },
         { name: 'Стас Рождественский', birthday: birthday4 }
     ];
-
-    inputData = SortDays(inputData);
 
     let mapKeys = GetAllExistMonthes(inputData);
 
@@ -43,7 +40,6 @@ function main() {
         }
     }
 
-    // console.log(employees); // Delete
     DispalyEmployees(employees);
 }
 

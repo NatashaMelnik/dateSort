@@ -5,11 +5,11 @@ let date2 = new Date();
 
 describe('calculate age wright', () => {
     it('return correct age', () => {
-        expect(calculateAge(date1)).toStrictEqual(21);
+        expect(calculateAge(date1)).toStrictEqual(22);
     });
 
     it('return correct age from now', () => {
-        expect(calculateAge(date2)).toStrictEqual(0);
+        expect(calculateAge(date2)).toStrictEqual(1);
     });
 });
 

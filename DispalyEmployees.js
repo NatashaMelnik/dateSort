@@ -1,8 +1,10 @@
 const calculateAge = require('./calculateAge');
+const SortDays = require('./SortDays');
+
 
 let monthNamesArr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Ноябрь', 'Декабрь',];
 
-function DispalyEmployees(employees) {
+function DispalyEmployees(employees) { // set plans for testing
     for (let j = 1; j < 12; j++) {
         let currMonth;
         for (const [key, value] of employees) {
@@ -17,19 +19,20 @@ function DispalyEmployees(employees) {
         }
     }
 
-    return ;
+    // return ;
 }
 
-function Print(value) {
-    value.forEach(element => {
-        let age = calculateAge(element.birthday);
-        let output = `(${element.birthday.getDate()}) - ${element.name} (${age} ${declOfNum(age)})`
+function Print(employees) {
+    employees = SortDays(employees);
+    employees.forEach(employee => {
+        let age = calculateAge(employee.birthday);
+        let output = `(${employee.birthday.getDate()}) - ${employee.name} (${age} ${wordForm(age)})`
         console.log(output);
         return output;
     });
 }
 
-function declOfNum(n) {  
+function wordForm(n) {  
     n = Math.abs(n) % 100; 
     var n1 = n % 10;
     if (n > 10 && n < 20) { return 'лет'; }

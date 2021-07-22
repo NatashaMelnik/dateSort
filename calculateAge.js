@@ -1,7 +1,7 @@
 function calculateAge(date) {
-    var ageDifMs = Date.now() - date;
-    var ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
+    let ageDifMs = Date.now() - date;
+    let ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970)+1;
 }
 
 module.exports = calculateAge
