@@ -2,23 +2,29 @@ const Print = require('./PrintOutput');
 
 
 let monthNamesArr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Ноябрь', 'Декабрь',];
+let output = ['month'];
 
-function DispalyEmployees(employees) { // set plans for testing
-    for (let j = 1; j < 12; j++) {
+function DispalyEmployees(employees, planingIndex) {
+    let date = new Date;
+    let year = date.getFullYear();
+    let currIndex = +date.getMonth() + 1;
+    for (let j = currIndex; j <= currIndex + planingIndex; j++) {
         let currMonth;
         for (const [key, value] of employees) {
             if (key == j) {
-                let tempMonth = monthNamesArr[key - 1];
+                let tempMonth = monthNamesArr[key - 1] + ' ' + year;
                 if (tempMonth !== currMonth) {
                     console.log(tempMonth);
+                    output.push('+month');
                 }
-                Print(value)
+                Print(value);
+                output.push(value);
                 currMonth = tempMonth;
             }
         }
     }
 
-    // return ;
+    return output.length;
 }
 
 module.exports = DispalyEmployees;
