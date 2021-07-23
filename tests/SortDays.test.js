@@ -1,9 +1,9 @@
-let SortDays = require('../SortDays');
+const SortDays = require('../SortDays');
 
-let date1 = new Date('May 17, 1995');
-let date2 = new Date('July 18, 1995');
-let date3 = new Date('August 11, 1995');
-let date4 = new Date('October 12, 1995');
+const date1 = new Date('May 17, 1995');
+const date2 = new Date('July 18, 1995');
+const date3 = new Date('August 11, 1995');
+const date4 = new Date('October 12, 1995');
 
 const inputData = [
     { name: 'Qwe', birthday: date1 },
