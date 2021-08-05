@@ -4,26 +4,38 @@ const GetAllExistMonthes = require('./modules/GetAllExistMonthes');
 const DelSame = require('./modules/DelSame');
 const DispalyEmployees = require('./modules/DispalyEmployees');
 
+const { Client } = require('pg');
+const config = require('./config');
+
 // let nodePath = process.argv[0];
 // let appPath = process.argv[1];
-let filePath = process.argv[2]; // 'something.csv'
-let index = process.argv[3]; // index
+// let filePath = process.argv[2]; // 'something.csv'
+// let index = process.argv[3]; // index
 
-const csv = require('csv-parser')
-const fs = require('fs')
-let file = [];
+// const csv = require('csv-parser')
+// const fs = require('fs')
+// let file = [];
 
-fs.createReadStream(filePath)// filePath
-    .pipe(csv())
-    .on('data', (data) => { 
-        let day = new Date(data.birthday);
-        file.push({name: data.name, birthday: day}) 
-    })
-    .on('end', () => {
-        main(file, index);
-    });
+// fs.createReadStream(filePath)// filePath
+//     .pipe(csv())
+//     .on('data', (data) => { 
+//         let day = new Date(data.birthday);
+//         file.push({name: data.name, birthday: day}) 
+//     })
+//     .on('end', () => {
+//         main(file, index);
+//     });
 
-
+async function getData() {
+    const client = new Client(config);
+    client.connect();
+    return client.query('SELECT * FROM public.birthdays;')
+        .then(data => {
+            if (data.rows.length > 0) {
+                return data.rows;
+            }
+        });
+}
 
 function main(inputData, index) {
 
@@ -55,7 +67,11 @@ function main(inputData, index) {
     DispalyEmployees(employees, +index);
 }
 
-
+// main(3);
+getData().then(data => {
+    // console.log(data);
+    main(data, 4);
+})
 
 // let birthday1 = new Date('June 17, 1995');
 // let birthday2 = new Date('June 12, 1993');
